@@ -8,7 +8,7 @@
 # - ![This is an image](https://boot.dev/image.jpg)
 
 from enum import Enum
-from htmlnode import LeafNode
+from src.htmlnode import LeafNode
 
 
 class TextType(Enum):
