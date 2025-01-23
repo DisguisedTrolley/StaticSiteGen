@@ -55,3 +55,6 @@ def text_node_to_html_node(text_node: TextNode):
             return LeafNode(
                 tag="img", value="", props={"src": "", "alt": "Random image"}
             )
+
+        case _:
+            raise Exception("Invalid node type.")
