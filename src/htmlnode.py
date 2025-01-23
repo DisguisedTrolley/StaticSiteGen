@@ -22,8 +22,33 @@ class HTMLNode:
         raise NotImplementedError
 
     def props_to_html(self) -> str:
+        if not self.props:
+            return ""
+
         props = list(map(lambda x: f' {x[0]}="{x[1]}"', self.props.items()))
         return "".join(props)
 
     def __repr__(self) -> str:
         return f"HTMLNode({self.tag}, {self.value}, {self.children}, {self.props})"
+
+
+# NOTE: A LeafNode is a type of HTMLNode that represents a single HTML tag with no children.
+# For example, a simple <p> tag with some text inside of it:
+# <p>This is a paragraph of text.</p>
+
+
+class LeafNode(HTMLNode):
+    def __init__(self, value: str, tag: str, props: dict = None):
+        super().__init__(value=value, tag=tag, props=props)
+
+    def to_html(self):
+        if not self.value:
+            raise ValueError("Leaf node must contain value")
+
+        if not self.tag:
+            return self.value
+
+        attributes = self.props_to_html()
+        leaf_node = f"<{self.tag}{attributes}>{self.value}</{self.tag}>"
+
+        return leaf_node
