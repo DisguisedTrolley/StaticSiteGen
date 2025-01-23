@@ -1,3 +1,7 @@
+# NOTE: A "TextNode" is an intermediate representation between Markdown and HTML, and is specific to inline markup.
+# The HTMLNode class will represent a "node" in an HTML document tree (like a <p> tag and its contents, or an <a> tag and its contents)
+# and is purpose-built to render itself as HTML.
+
 from typing import Optional, List
 
 

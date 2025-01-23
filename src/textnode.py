@@ -1,3 +1,12 @@
+# NOTE: A TextNode is a way to represent all different types of inline text.
+# Examples of inline Text:
+# - This is normal text
+# - **This is bold text**
+# - *This is italic text*
+# - `This is code`
+# - [This is a link](https://boot.dev)
+# - ![This is an image](https://boot.dev/image.jpg)
+
 from enum import Enum
 
 
