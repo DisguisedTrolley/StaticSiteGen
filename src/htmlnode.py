@@ -38,8 +38,8 @@ class HTMLNode:
 
 
 class LeafNode(HTMLNode):
-    def __init__(self, value: str, tag: str, props: dict = None):
-        super().__init__(value=value, tag=tag, props=props)
+    def __init__(self, tag: str, value: str, props: dict = None):
+        super().__init__(tag=tag, value=value, children=None, props=props)
 
     def to_html(self):
         if not self.value:
@@ -52,3 +52,30 @@ class LeafNode(HTMLNode):
         leaf_node = f"<{self.tag}{attributes}>{self.value}</{self.tag}>"
 
         return leaf_node
+
+
+# NOTE: The new ParentNode class will handle the nesting of HTML nodes inside of one another.
+# Any HTML node that's not "leaf" node (i.e. it has children) is a "parent" node.
+
+
+class ParentNode(HTMLNode):
+    def __init__(
+        self, tag: str, children: Optional[List["HTMLNode"]], props: dict = None
+    ):
+        super().__init__(tag=tag, value=None, children=children, props=props)
+
+    def to_html(self):
+        if not self.tag:
+            raise ValueError("Tag is required")
+
+        if not self.children:
+            raise ValueError("Children array is required")
+
+        node_contents = []
+
+        for node in self.children:
+            node_contents.append(node.to_html())
+
+        return (
+            f"<{self.tag}{self.props_to_html()}>{''.join(node_contents)}</{self.tag}>"
+        )
