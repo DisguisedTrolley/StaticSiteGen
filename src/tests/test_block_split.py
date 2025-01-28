@@ -1,6 +1,6 @@
 import unittest
 
-from src.block_split import markdown_to_blocks
+from src.block_split import block_to_blocktype, markdown_to_blocks
 
 
 class TestMarkdownToBlock(unittest.TestCase):
@@ -64,5 +64,82 @@ This is the same paragraph on a new line
         self.assertEqual(res, expected)
 
 
+
+class TestBlockType(unittest.TestCase):
+    def test_block_type_heading(self):
+        inp = "##  This is a secondary heading"
+        res = block_to_blocktype(inp)
+
+        expected = "heading"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_code(self):
+        inp = '''```py code type.\n some code here\n```'''
+        res = block_to_blocktype(inp)
+
+        expected = "code"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_wrong_code(self):
+        inp = '```py print("hello")'
+        
+        res = block_to_blocktype(inp)
+
+        expected = "paragraph"
+
+        self.assertEqual(res, expected)
+
+
+    def test_block_type_quote(self):
+        inp = """> quote of the day\n> Some quote\n> yet another quote"""
+
+        res = block_to_blocktype(inp)
+        expected = "quote"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_wrong_quote(self):
+        inp = """> quote of the day\nsomething in between\n> another quote"""
+
+        res = block_to_blocktype(inp)
+        expected = "paragraph"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_uo_list(self):
+        inp = """* list item 1\n* list item two"""
+
+        res = block_to_blocktype(inp)
+
+        expected = "unordered_list"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_paragraph(self):
+        inp = """* This was a list\nbut this line ruined it."""
+
+        res = block_to_blocktype(inp)
+        expected = "paragraph"
+
+        self.assertEqual(res, expected)
+
+    def test_block_type_ordered_list(self):
+        inp = """1. this is supposed to be an ordered list\n2. this is the second item"""
+        
+        res = block_to_blocktype(inp)
+        expected = "ordered_list"
+
+        self.assertEqual(res, expected)
+    
+    def test_block_type_wrong_ordered_list(self):
+        inp = """1. this is supposed to be an ordered list\n2. this is the second item\nthis is not a list item so it breaks"""
+
+        res = block_to_blocktype(inp)
+        expected = "paragraph"
+
+        self.assertEqual(res, expected)
+    
 if __name__ == "__main__":
     unittest.main()
