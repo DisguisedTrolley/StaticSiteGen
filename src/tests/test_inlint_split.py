@@ -1,6 +1,6 @@
 import unittest
 from src.textnode import TextNode, TextType
-from src.splitdelimiter import (
+from src.inline_split import (
     split_links,
     split_nodes_delimiter,
 )
@@ -77,8 +77,8 @@ class TestSplitNodesDelimiterImageAndLink(unittest.TestCase):
             TextType.TEXT,
         )
 
-        nodes = split_nodes_delimiter([node])
-        result = split_links(nodes)
+        text_nodes = split_nodes_delimiter([node])
+        link_nodes = split_links(text_nodes)
 
         expected = [
             TextNode("This is ", TextType.TEXT),
@@ -95,4 +95,4 @@ class TestSplitNodesDelimiterImageAndLink(unittest.TestCase):
             TextNode("link", TextType.LINK, "https://boot.dev"),
         ]
 
-        self.assertEqual(result, expected)
+        self.assertEqual(link_nodes, expected)

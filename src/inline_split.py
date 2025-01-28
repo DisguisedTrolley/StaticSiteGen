@@ -7,8 +7,6 @@ TEXT_REGEX = r"(\*{1,2}|`)"
 COMBINED_REGEX = r"(!?\[([^\]]+)\]\(([^)]+)\))"
 FORMAT_MAP = {"**": TextType.BOLD, "*": TextType.ITALIC, "`": TextType.CODE}
 
-# TODO: Add children prop to TextNode and provide nesting support.
-
 
 def split_nodes_delimiter(nodes: List["TextNode"]) -> List["TextNode"]:
     final_nodes = []
