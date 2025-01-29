@@ -27,14 +27,14 @@ class TestSplitNodesDelimiterTextTypes(unittest.TestCase):
         self.assertEqual(result, expected)
 
     def test_split_multiple_types(self):
-        node = TextNode("This has **bold** and an *italic* text", TextType.TEXT)
+        node = TextNode("This has *italic* and an **bold** text", TextType.TEXT)
 
         result = split_nodes_delimiter([node])
         expected = [
             TextNode("This has ", TextType.TEXT),
-            TextNode("bold", TextType.BOLD),
-            TextNode(" and an ", TextType.TEXT),
             TextNode("italic", TextType.ITALIC),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("bold", TextType.BOLD),
             TextNode(" text", TextType.TEXT),
         ]
 

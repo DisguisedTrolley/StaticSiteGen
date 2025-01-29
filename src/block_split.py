@@ -29,12 +29,12 @@ def block_to_blocktype(block: str) -> str:
 
     lines = block.split('\n')
 
-    check_quote = all(line.startswith(">") for line in lines)
+    check_quote = all(line.startswith("> ") for line in lines)
     if check_quote:
         return "quote"
 
-    check_uo_list_star = all(line.startswith("*")  for line in lines)
-    check_uo_list_dash = all(line.startswith("-") for line in lines)
+    check_uo_list_star = all(line.startswith("* ")  for line in lines)
+    check_uo_list_dash = all(line.startswith("- ") for line in lines)
     
     if check_uo_list_star or check_uo_list_dash:
         return "unordered_list"

@@ -14,6 +14,11 @@ def split_nodes_delimiter(nodes: List["TextNode"]) -> List["TextNode"]:
         # Gives a list of all the matching types. Occouring in order.
         txt_match = re.findall(TEXT_REGEX, node.text)
 
+        # Prioratises '**' over '*'.
+        # stripping '*' first is disasterous here as it strips the bold one also.
+        # Will think of a better way at some point (probably, maybe) (the answer is probably regex but i dont want to use it).
+        txt_match = sorted(txt_match, reverse=True)
+
         # Base case. When no delimiters are found
         if not txt_match:
             final_nodes.append(node)
@@ -26,7 +31,7 @@ def split_nodes_delimiter(nodes: List["TextNode"]) -> List["TextNode"]:
 
             # even split means the delimiters are not in pairs.
             if len(sections) % 2 == 0:
-                raise Exception("Invalid markdown format")
+                raise Exception(f"Invalid markdown format. Non matching '{txt_match[0]}' delimiter\nline reference: '{node.text}'")
 
             for i in range(len(sections)):
                 # case when first element is a delimiter.
