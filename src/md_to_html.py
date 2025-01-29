@@ -4,6 +4,19 @@ from src.block_split import block_to_blocktype, markdown_to_blocks
 from src.htmlnode import ParentNode
 from src.textnode import TextNode, TextType, text_node_to_html_node
 
+def extract_title(markdown: str) -> str:
+    blocks = markdown_to_blocks(markdown)
+    title = None
+
+    for block in blocks:
+        if block.startswith("# "):
+            title = block.lstrip("# ").strip()
+            break
+
+    if not title:
+        raise Exception("Heading not found")
+
+    return title
 
 def markdown_to_html(markdown: str) -> str:
     # Split the markdown file into digestable blocks.
