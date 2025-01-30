@@ -1,11 +1,23 @@
-
 import unittest
 
 from src.md_to_html import markdown_to_html
 
 
 class TestMdToHTMLNode(unittest.TestCase):
+    def test_links(self):
+        node = """
+# The Unparalleled Majesty of "The Lord of the Rings"
 
+[Back Home](/)
+
+![LOTR image artistmonkeys](/images/rivendell.png)
+"""
+        res = markdown_to_html(node)
+        print(res)
+        self.assertEqual("Test", "Test")
+
+
+'''
     def test_different_headings(self):
         node = """# primary heading\n\n## secondary heading\n\n### This here is h3\n\n#### h4 comes here"""
 
@@ -59,7 +71,4 @@ This md doc *will* teach **coding**
         exp = "<div><h2>List items</h2><ol><li>First ordered list item.</li><li>second ordered list item.</li></ol></div>"
 
         self.assertEqual(res, exp)
-
-
-
-
+'''

@@ -8,7 +8,8 @@
 # - ![This is an image](https://boot.dev/image.jpg)
 
 from enum import Enum
-from src.htmlnode import LeafNode
+
+from htmlnode import LeafNode
 
 
 class TextType(Enum):
@@ -53,7 +54,7 @@ def text_node_to_html_node(text_node: TextNode):
             )
         case TextType.IMAGE:
             return LeafNode(
-                tag="img", value="", props={"src": "", "alt": "Random image"}
+                tag="img", value="", props={"src": text_node.url, "alt": text_node.text}
             )
 
         case _:

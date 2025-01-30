@@ -2,16 +2,16 @@
 # The HTMLNode class will represent a "node" in an HTML document tree (like a <p> tag and its contents, or an <a> tag and its contents)
 # and is purpose-built to render itself as HTML.
 
-from typing import Optional, List
+from typing import List, Optional
 
 
 class HTMLNode:
     def __init__(
         self,
-        tag: str = None,
-        value: str = None,
+        tag: Optional[str] = None,
+        value: Optional[str] = None,
         children: Optional[List["HTMLNode"]] = None,
-        props: dict = None,
+        props: Optional[dict] = None,
     ):
         self.tag = tag
         self.value = value
@@ -42,6 +42,9 @@ class LeafNode(HTMLNode):
         super().__init__(tag=tag, value=value, children=None, props=props)
 
     def to_html(self):
+        if self.tag == "img":
+            return f"<img {self.props_to_html()}>"
+
         if not self.value:
             raise ValueError("Leaf node must contain value")
 
@@ -82,9 +85,3 @@ class ParentNode(HTMLNode):
         return (
             f"<{self.tag}{self.props_to_html()}>{''.join(node_contents)}</{self.tag}>"
         )
-
-
-
-
-
-

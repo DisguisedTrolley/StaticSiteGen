@@ -1,8 +1,10 @@
 from typing import List
-from src.inline_split import split_links, split_nodes_delimiter
-from src.block_split import block_to_blocktype, markdown_to_blocks
-from src.htmlnode import ParentNode
-from src.textnode import TextNode, TextType, text_node_to_html_node
+
+from block_split import block_to_blocktype, markdown_to_blocks
+from htmlnode import ParentNode
+from inline_split import split_links, split_nodes_delimiter
+from textnode import TextNode, TextType, text_node_to_html_node
+
 
 def extract_title(markdown: str) -> str:
     blocks = markdown_to_blocks(markdown)
@@ -18,6 +20,7 @@ def extract_title(markdown: str) -> str:
 
     return title
 
+
 def markdown_to_html(markdown: str) -> str:
     # Split the markdown file into digestable blocks.
     blocks = markdown_to_blocks(markdown)
@@ -26,8 +29,9 @@ def markdown_to_html(markdown: str) -> str:
 
     for block in blocks:
         block_type = block_to_blocktype(block)
-        children_nodes.append(block_to_node(block, block_type))
-        
+        node = block_to_node(block, block_type)
+        children_nodes.append(node)
+
     final_html = ParentNode(tag="div", children=children_nodes).to_html()
     return final_html
 
@@ -37,6 +41,8 @@ def markdown_to_html(markdown: str) -> str:
 """
 Split each block of markdown into a list of nodes.
 """
+
+
 def block_to_node(block: str, block_type: str) -> ParentNode:
     match block_type:
         case "heading":
@@ -60,13 +66,15 @@ def block_to_node(block: str, block_type: str) -> ParentNode:
 
         case "unordered_list":
             list_items = block.splitlines()
-            list_items_cleaned = [li.lstrip("*- ") for li in list_items]
+            list_items_cleaned = [li[2:] for li in list_items]
 
             return handle_lists(list_items_cleaned, "ul")
 
         case "ordered_list":
             list_items = block.splitlines()
-            list_items_cleaned = [list_items[i].lstrip(f"{i + 1}. ") for i in range(len(list_items))]
+            list_items_cleaned = [
+                list_items[i].lstrip(f"{i + 1}. ") for i in range(len(list_items))
+            ]
 
             return handle_lists(list_items_cleaned, "ol")
 
@@ -75,12 +83,12 @@ def block_to_node(block: str, block_type: str) -> ParentNode:
             return get_children_nodes(lines, "p")
 
 
-
 """
 Returns a list of child nodes from a given TextNode
 """
-def get_children_nodes(text: str, tag: str) -> List[TextNode]:
 
+
+def get_children_nodes(text: str, tag: str) -> List[TextNode]:
     main_node = TextNode(text=text, text_type=TextType.TEXT)
     child_text_nodes = split_nodes_delimiter([main_node])
     child_text_nodes = split_links(child_text_nodes)
@@ -89,7 +97,6 @@ def get_children_nodes(text: str, tag: str) -> List[TextNode]:
 
     for node in child_text_nodes:
         child_html_nodes.append(text_node_to_html_node(node))
-
 
     parent_node = ParentNode(tag=tag, children=child_html_nodes)
 
@@ -103,4 +110,3 @@ def handle_lists(list_items: List[str], tag: str) -> ParentNode:
         children_nodes.append(child_node)
 
     return ParentNode(tag=tag, children=children_nodes)
-

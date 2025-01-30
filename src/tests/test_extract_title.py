@@ -1,4 +1,5 @@
 import unittest
+
 from src.md_to_html import extract_title
 
 
@@ -26,5 +27,3 @@ class TestExtractTitle(unittest.TestCase):
     def test_heading_with_extra_spaces(self):
         markdown = "#   Title with spaces   \n\nContent here."
         self.assertEqual(extract_title(markdown), "Title with spaces")
-
-

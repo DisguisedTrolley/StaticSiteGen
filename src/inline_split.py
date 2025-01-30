@@ -1,7 +1,7 @@
 import re
 from typing import List
-from src.textnode import TextNode, TextType
 
+from textnode import TextNode, TextType
 
 TEXT_REGEX = r"(\*{1,2}|`)"
 COMBINED_REGEX = r"(!?\[([^\]]+)\]\(([^)]+)\))"
@@ -31,7 +31,9 @@ def split_nodes_delimiter(nodes: List["TextNode"]) -> List["TextNode"]:
 
             # even split means the delimiters are not in pairs.
             if len(sections) % 2 == 0:
-                raise Exception(f"Invalid markdown format. Non matching '{txt_match[0]}' delimiter\nline reference: '{node.text}'")
+                raise Exception(
+                    f"Invalid markdown format. Non matching '{txt_match[0]}' delimiter\nline reference: '{node.text}'"
+                )
 
             for i in range(len(sections)):
                 # case when first element is a delimiter.
@@ -77,7 +79,9 @@ def split_links(nodes: List["TextNode"]) -> List["TextNode"]:
             alt = link.group(2)
             url = link.group(3)
 
-            new_nodes.append(TextNode(text=text, text_type=TextType.TEXT))
+            if text != "":
+                new_nodes.append(TextNode(text=text, text_type=TextType.TEXT))
+
             new_nodes.append(
                 TextNode(
                     text=alt,
@@ -90,7 +94,7 @@ def split_links(nodes: List["TextNode"]) -> List["TextNode"]:
 
         ending_string = node.text[prev_match_end:]
 
-        if ending_string != "":
+        if ending_string.strip() != "":
             new_nodes.append(TextNode(text=ending_string, text_type=TextType.TEXT))
 
         final_nodes.extend(new_nodes)
