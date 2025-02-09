@@ -131,7 +131,3 @@ class TestBlockType(unittest.TestCase):
         expected = "paragraph"
 
         self.assertEqual(res, expected)
-
-
-if __name__ == "__main__":
-    unittest.main()

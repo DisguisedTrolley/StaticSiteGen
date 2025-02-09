@@ -1,4 +1,5 @@
 import unittest
+
 from src.htmlnode import HTMLNode
 
 
@@ -37,7 +38,3 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode(tag="div", props={})
         expected_html = ""
         self.assertEqual(node.props_to_html(), expected_html)
-
-
-if __name__ == "__main__":
-    unittest.main()

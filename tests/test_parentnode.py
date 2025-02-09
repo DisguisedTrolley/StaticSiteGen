@@ -1,5 +1,6 @@
-from src.htmlnode import ParentNode, LeafNode
 import unittest
+
+from src.htmlnode import LeafNode, ParentNode
 
 
 class TestParentNode(unittest.TestCase):
@@ -54,7 +55,3 @@ class TestParentNode(unittest.TestCase):
 
         expected_html = "<section><p>Paragraph 3</p><div><p>Paragraph 1</p><p>Paragraph 2</p></div><p>Paragraph 4</p></section>"
         self.assertEqual(parent.to_html(), expected_html)
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -1,9 +1,7 @@
 import unittest
+
+from src.inline_split import split_links, split_nodes_delimiter
 from src.textnode import TextNode, TextType
-from src.inline_split import (
-    split_links,
-    split_nodes_delimiter,
-)
 
 
 class TestSplitNodesDelimiterTextTypes(unittest.TestCase):

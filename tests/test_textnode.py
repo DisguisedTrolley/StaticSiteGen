@@ -49,7 +49,3 @@ class TestTextToHTML(unittest.TestCase):
         self.assertEqual({"href": "https://boot.dev"}, converted.props)
         self.assertEqual("Boot dev", converted.value)
         self.assertIsNone(converted.children)
-
-
-if __name__ == "__main__":
-    unittest.main()

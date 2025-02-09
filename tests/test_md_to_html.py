@@ -13,8 +13,9 @@ class TestMdToHTMLNode(unittest.TestCase):
 ![LOTR image artistmonkeys](/images/rivendell.png)
 """
         res = markdown_to_html(node)
-        print(res)
-        self.assertEqual("Test", "Test")
+        expected = '<div><h1>The Unparalleled Majesty of "The Lord of the Rings"</h1><p><a href="/">Back Home</a></p><p><img  src="/images/rivendell.png" alt="LOTR image artistmonkeys"></p></div>'
+
+        self.assertEqual(res, expected)
 
     def test_different_headings(self):
         node = """# primary heading\n\n## secondary heading\n\n### This here is h3\n\n#### h4 comes here"""

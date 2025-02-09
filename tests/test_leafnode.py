@@ -32,7 +32,3 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode(value="Hello, World!", tag="p", props=props)
         expected_html = '<p class="my-class" id="my-id">Hello, World!</p>'
         self.assertEqual(node.to_html(), expected_html)
-
-
-if __name__ == "__main__":
-    unittest.main()
