@@ -27,3 +27,7 @@ class TestExtractTitle(unittest.TestCase):
     def test_heading_with_extra_spaces(self):
         markdown = "#   Title with spaces   \n\nContent here."
         self.assertEqual(extract_title(markdown), "Title with spaces")
+
+
+if __name__ == "__main__":
+    unittest.main()

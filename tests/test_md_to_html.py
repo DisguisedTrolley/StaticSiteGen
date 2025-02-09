@@ -16,8 +16,6 @@ class TestMdToHTMLNode(unittest.TestCase):
         print(res)
         self.assertEqual("Test", "Test")
 
-
-'''
     def test_different_headings(self):
         node = """# primary heading\n\n## secondary heading\n\n### This here is h3\n\n#### h4 comes here"""
 
@@ -38,7 +36,6 @@ class TestMdToHTMLNode(unittest.TestCase):
         res = markdown_to_html(node)
         exp = "<div><h1>Primary heading</h1><pre><code>Some code goes in here</code></pre><h2>secondary heading</h2></div>"
 
-
         self.assertEqual(res, exp)
 
     def test_quote_block(self):
@@ -58,7 +55,7 @@ This md doc *will* teach **coding**
 
     def test_unordered_list_block(self):
         node = """# List items\n\n* first item\n* second *item*"""
-        
+
         res = markdown_to_html(node)
         exp = "<div><h1>List items</h1><ul><li>first item</li><li>second <i>item</i></li></ul></div>"
 
@@ -71,4 +68,3 @@ This md doc *will* teach **coding**
         exp = "<div><h2>List items</h2><ol><li>First ordered list item.</li><li>second ordered list item.</li></ol></div>"
 
         self.assertEqual(res, exp)
-'''
